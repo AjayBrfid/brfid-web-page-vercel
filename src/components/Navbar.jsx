@@ -66,6 +66,15 @@ export default function Navbar() {
               ABOUT
             </NavLink>
           </li>
+          <li>
+            <NavLink
+              to="/solutions"
+              className={({ isActive }) => (isActive ? styles.active : "")}
+              onClick={() => setMenuOpen(false)}
+            >
+              SOLUTIONS
+            </NavLink>
+          </li>
         </ul>
 
         {/* Right — Contact us · Dark mode toggle · Hamburger */}

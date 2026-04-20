@@ -1,0 +1,678 @@
+/* ═══════════════════════════════════════════
+   SOLUTIONS — scroll-driven full-screen slides
+═══════════════════════════════════════════ */
+
+.page {
+  padding-top: 72px;
+  background: var(--bg);
+}
+
+/* ── Hero ── */
+.hero {
+  padding: 5rem 2rem 3.5rem;
+  background: var(--bg-2);
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.3s ease;
+}
+
+.heroTag {
+  display: inline-block;
+  background: rgba(52, 172, 224, 0.10);
+  border: 1px solid rgba(52, 172, 224, 0.28);
+  color: #34ace0;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.95rem;
+  border-radius: 100px;
+  margin-bottom: 1.25rem;
+}
+
+.heroTitle {
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-weight: 800;
+  color: var(--text-1);
+  line-height: 1.15;
+  margin-bottom: 1rem;
+}
+
+.heroAccent {
+  color: #34ace0;
+  font-style: italic;
+}
+
+.heroSub {
+  font-size: 1rem;
+  color: var(--text-3);
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* ── Mobile tab strip ── */
+.mobileTabs {
+  display: none;
+  overflow-x: auto;
+  gap: 0.5rem;
+  padding: 1.25rem;
+  scrollbar-width: none;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-card);
+}
+
+.mobileTabs::-webkit-scrollbar { display: none; }
+
+.mobileTab {
+  flex-shrink: 0;
+  padding: 0.45rem 1rem;
+  border-radius: 100px;
+  border: 1.5px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-3);
+  font-size: 0.76rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+
+.mobileTabActive { color: #fff; }
+
+/* ── Body layout ── */
+.body {
+  display: flex;
+  max-width: 1280px;
+  margin: 0 auto;
+  align-items: flex-start;
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  width: 230px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border);
+  padding: 2rem 0;
+  position: sticky;
+  top: 72px;
+  height: calc(100vh - 72px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.sidebarHeading {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  padding: 0 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.sideItem {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  width: 100%;
+  padding: 0.65rem 1.25rem;
+  border: none;
+  border-left: 3px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  transition: background 0.15s;
+}
+
+.sideItem:hover { background: var(--bg-2); }
+
+.sideIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--text-3);
+  transition: background 0.15s, color 0.15s;
+}
+
+[data-theme="dark"] .sideIcon {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.sideIcon svg { width: 16px; height: 16px; }
+
+.sideLabel {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-2);
+  line-height: 1.3;
+  transition: color 0.15s;
+}
+
+/* ═══════════════════════════════════════════
+   SCROLL-DRIVEN SLIDES
+═══════════════════════════════════════════ */
+
+/* Tall scroll track — provides the scroll distance */
+.scrollSection {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Sticky viewport-height container that clips the slides */
+.stickyPanel {
+  position: sticky;
+  top: 72px;
+  height: calc(100vh - 72px);
+  overflow: hidden;
+}
+
+/* All slides sit stacked at the same absolute position.
+   z-index (set inline) keeps slide 0 on top.
+   JS translates only the current top slide upward — the one beneath
+   is revealed progressively as the top slide peels away. */
+.slide {
+  position: absolute;
+  top: 1.25rem;
+  left: 2rem;
+  right: 2rem;
+  bottom: 1.5rem;
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  border-top: 4px solid var(--clr);
+  border-radius: 24px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  will-change: transform;
+  /* bottom shadow creates depth between stacked slides */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="dark"] .slide {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Scrollable content area — must be display:flex so slideContent can fill it */
+.slideInner {
+  flex: 1;
+  padding: 2rem 3rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.slideInner::-webkit-scrollbar { display: none; }
+
+/* Step dots footer */
+.slideFooter {
+  flex-shrink: 0;
+  padding: 0.85rem 3rem 1.1rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stepDots {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.stepDot {
+  display: block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: width 0.3s ease, border-radius 0.3s ease, background 0.3s ease;
+}
+
+.stepCount {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-3);
+  letter-spacing: 0.05em;
+}
+
+/* ── Slide content — fills slideInner height ── */
+.slideContent {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.slideContentSpaced {
+  justify-content: space-between;
+  gap: 0;
+}
+
+/* Slide 1 wrapper sections — each becomes a space-between block */
+.overviewHeader  { display: flex; flex-direction: column; }
+.challengeSection { display: flex; flex-direction: column; }
+.useCasesSection  { display: flex; flex-direction: column; }
+
+/* ── Slide 1: Overview header ── */
+.overviewBadge {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.35rem;
+}
+
+.overviewIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.overviewIcon svg { width: 20px; height: 20px; }
+
+.overviewMeta {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.platformName {
+  display: block;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
+}
+
+.industryTitle {
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-weight: 800;
+  color: var(--text-1);
+  line-height: 1.15;
+}
+
+.tagline {
+  font-size: 0.88rem;
+  color: var(--text-3);
+  line-height: 1.55;
+  margin-bottom: 0.4rem;
+}
+
+.sectionLabel {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 0.45rem;
+  display: block;
+}
+
+.challenge {
+  font-size: 0.855rem;
+  color: var(--text-2);
+  line-height: 1.6;
+  padding-left: 0.875rem;
+  border-left: 3px solid;
+  margin: 0;
+}
+
+/* ── Use cases ── */
+.useCases {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.useCaseItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.855rem;
+  color: var(--text-1);
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 0.42rem;
+}
+
+/* ── Slides breadcrumb ── */
+.slideCrumb {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-top: 0.35rem;
+  margin-bottom: 0.65rem;
+}
+
+.crumbIndustry {
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+
+/* ── Slide 2: Features single-column list ── */
+.featuresList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.featureItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.6rem 0.9rem;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.featureDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 0.35rem;
+}
+
+.featureLabel {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-1);
+  margin-bottom: 0.15rem;
+  line-height: 1.3;
+}
+
+.featureDesc {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--text-3);
+  line-height: 1.55;
+}
+
+/* ── Slide 3: Outcomes ── */
+.outcomes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.85rem;
+  margin-bottom: 0.75rem;
+}
+
+.outcomeCard {
+  background: var(--bg-2);
+  border: 1.5px solid var(--border);
+  border-top-width: 3px;
+  border-radius: 16px;
+  padding: 1rem 1rem 0.8rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.outcomeMetric {
+  font-size: 1.9rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.outcomeLabel {
+  font-size: 0.75rem;
+  color: var(--text-3);
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+/* Tagline + top features — stacked vertically */
+.outcomeSummary {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0.65rem 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0.75rem;
+}
+
+.summaryText {
+  font-size: 0.9rem;
+  color: var(--text-2);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.summaryFeatures {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.summaryFeatureRow {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.summaryFeatureLabel {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.ctaBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.outcomeSub {
+  font-size: 0.875rem;
+  color: var(--text-3);
+  margin: 0;
+}
+
+/* ── CTA ── */
+.ctaRow {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.ctaPrimary {
+  padding: 0.75rem 1.75rem;
+  border-radius: 8px;
+  border: none;
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: opacity 0.2s;
+}
+
+.ctaPrimary:hover { opacity: 0.86; }
+
+.ctaSecondary {
+  padding: 0.75rem 1.75rem;
+  border-radius: 8px;
+  background: transparent;
+  border: 1.5px solid var(--border);
+  color: var(--text-2);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.ctaSecondary:hover { border-color: var(--text-2); color: var(--text-1); }
+
+/* ── Bottom CTA ── */
+.bottomCta {
+  background: var(--bg-2);
+  border-top: 1px solid var(--border);
+  padding: 5rem 2rem;
+  text-align: center;
+  transition: background 0.3s ease;
+}
+
+.bottomCtaTitle {
+  font-size: clamp(1.5rem, 3vw, 2.4rem);
+  font-weight: 800;
+  color: var(--text-1);
+  margin-bottom: 0.75rem;
+}
+
+.bottomCtaSub {
+  font-size: 0.95rem;
+  color: var(--text-3);
+  margin-bottom: 2rem;
+  line-height: 1.65;
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+
+@media (max-width: 900px) {
+  .sidebar { display: none; }
+  .mobileTabs { display: flex; }
+
+  .slide {
+    left: 1.25rem;
+    right: 1.25rem;
+    top: 1rem;
+    bottom: 1.25rem;
+    border-radius: 18px;
+  }
+
+  .slideInner { padding: 1.5rem 1.75rem 1.25rem; }
+  .slideFooter { padding: 0.8rem 1.75rem 1rem; }
+
+  .slideContent { gap: 2rem; }
+  .slideCrumb { margin-top: 0.25rem; margin-bottom: 0.55rem; }
+  .tagline { margin-bottom: 0.35rem; }
+  .featuresList { gap: 0.5rem; }
+  .featureItem { padding: 0.55rem 0.85rem; }
+  .outcomes { gap: 0.7rem; margin-bottom: 0.65rem; }
+  .outcomeCard { padding: 0.9rem 0.75rem 0.75rem; }
+  .outcomeMetric { font-size: 1.75rem; }
+  .outcomeSummary { padding: 0.6rem 0; margin-bottom: 0.65rem; }
+}
+
+@media (max-width: 768px) {
+  .hero { padding: 4rem 1.25rem 2.75rem; }
+  .bottomCta { padding: 4rem 1.25rem; }
+
+  .slide {
+    left: 1rem;
+    right: 1rem;
+    top: 0.75rem;
+    bottom: 1rem;
+    border-radius: 16px;
+  }
+
+  .slideInner { padding: 1.25rem 1.25rem 1rem; }
+  .slideFooter { padding: 0.75rem 1.25rem 1rem; }
+
+  .slideContent { gap: 1.5rem; }
+  .slideCrumb { margin-top: 0.15rem; margin-bottom: 0.5rem; }
+  .overviewBadge { gap: 0.65rem; margin-bottom: 0.25rem; }
+  .overviewIcon { width: 38px; height: 38px; border-radius: 10px; }
+  .overviewIcon svg { width: 18px; height: 18px; }
+  .industryTitle { font-size: clamp(1.1rem, 4vw, 1.5rem); }
+  .tagline { font-size: 0.83rem; margin-bottom: 0.25rem; }
+  .challenge { font-size: 0.81rem; line-height: 1.55; }
+  .useCases { gap: 0.38rem; }
+  .useCaseItem { font-size: 0.81rem; }
+  .featuresList { gap: 0.45rem; }
+  .featureItem { padding: 0.55rem 0.8rem; }
+  .featureLabel { font-size: 0.81rem; }
+  .featureDesc { font-size: 0.73rem; }
+  .outcomeSummary { gap: 0.5rem; padding: 0.55rem 0; margin-bottom: 0.6rem; }
+  .outcomes { gap: 0.55rem; margin-bottom: 0.65rem; }
+  .outcomeMetric { font-size: 1.6rem; }
+  .outcomeCard { padding: 0.8rem 0.6rem 0.65rem; }
+  .summaryText { font-size: 0.81rem; }
+  .summaryFeatureLabel { font-size: 0.77rem; }
+  .outcomeSub { font-size: 0.81rem; }
+}
+
+@media (max-width: 480px) {
+  .hero { padding: 3.5rem 1rem 2.5rem; }
+  .bottomCta { padding: 3.5rem 1rem; }
+
+  .slide {
+    left: 0.5rem;
+    right: 0.5rem;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    border-radius: 14px;
+  }
+
+  .slideInner { padding: 1rem 1rem 0.75rem; }
+  .slideFooter { padding: 0.65rem 1rem 0.85rem; }
+
+  .slideContent { gap: 1rem; }
+  .slideCrumb { margin-top: 0; margin-bottom: 0.5rem; }
+  .overviewBadge { gap: 0.6rem; margin-bottom: 0.3rem; }
+  .overviewIcon { width: 36px; height: 36px; border-radius: 8px; }
+  .overviewIcon svg { width: 17px; height: 17px; }
+  .industryTitle { font-size: clamp(1rem, 5vw, 1.3rem); }
+  .tagline { font-size: 0.8rem; line-height: 1.55; margin-bottom: 0.35rem; }
+  .challenge { font-size: 0.78rem; line-height: 1.6; padding-left: 0.65rem; }
+  .useCases { gap: 0.4rem; }
+  .useCaseItem { font-size: 0.78rem; gap: 0.5rem; }
+  .featuresList { gap: 0.45rem; }
+  .featureItem { padding: 0.55rem 0.75rem; border-radius: 8px; }
+  .featureLabel { font-size: 0.78rem; }
+  .featureDesc { font-size: 0.7rem; }
+  .outcomeSummary { gap: 0.6rem; padding: 0.6rem 0; margin-bottom: 0.6rem; }
+  .outcomes { gap: 0.4rem; margin-bottom: 0.7rem; }
+  .outcomeMetric { font-size: 1.4rem; }
+  .outcomeCard { padding: 0.85rem 0.5rem 0.75rem; border-radius: 12px; }
+  .summaryText { font-size: 0.78rem; line-height: 1.55; }
+  .summaryFeatureLabel { font-size: 0.75rem; }
+  .summaryFeatures { gap: 0.4rem; }
+  .outcomeSub { font-size: 0.78rem; }
+  .ctaRow { flex-direction: column; }
+  .ctaPrimary, .ctaSecondary { width: 100%; text-align: center; }
+}
+
+@media (max-width: 360px) {
+  .slideInner { padding: 0.75rem 0.75rem 0.5rem; }
+  .slideContent { gap: 0.75rem; }
+  .featureItem { padding: 0.45rem 0.6rem; }
+  .featureLabel { font-size: 0.74rem; }
+  .featureDesc { font-size: 0.67rem; }
+  .outcomeMetric { font-size: 1.2rem; }
+  .outcomeCard { padding: 0.7rem 0.4rem 0.6rem; }
+  .useCaseItem { font-size: 0.74rem; }
+}

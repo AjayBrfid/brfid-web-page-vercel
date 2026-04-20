@@ -17,6 +17,7 @@ import TaglineStrip from './components/TaglineStrip'
 // import Products from './pages/Products'
 // import ProductDetail from './pages/ProductDetail'
 import About from './pages/About'
+import Solutions from './pages/Solutions'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -73,6 +74,7 @@ export default function App() {
         {/* <Route path="/products" element={<Products />} /> */}
         {/* <Route path="/products/:id" element={<ProductDetail />} /> */}
         <Route path="/about" element={<About />} />
+        <Route path="/solutions" element={<Solutions />} />
         {/* <Route path="/clients" element={<Clients />} /> */}
         <Route path="/contact" element={<Contact />} />
       </Route>
