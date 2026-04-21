@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import brfidLogo from "../../public/images/brfid-logo.png";
 import styles from "./Navbar.module.css";
 import { useTheme } from "../context/ThemeContext";
@@ -30,7 +30,6 @@ function MoonIcon() {
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
 
   return (
@@ -42,7 +41,7 @@ export default function Navbar() {
           <img src={brfidLogo} alt="BRFID Logo" className={styles.logoImg} />
         </Link>
 
-        {/* Center — Nav links (absolutely centered, desktop only) */}
+        {/* Center — Nav links: HOME · SOLUTIONS · CONTACT */}
         <ul className={`${styles.navLinks} ${menuOpen ? styles.open : ""}`}>
           <li>
             <NavLink
@@ -59,15 +58,6 @@ export default function Navbar() {
           </li>
           <li>
             <NavLink
-              to="/about"
-              className={({ isActive }) => (isActive ? styles.active : "")}
-              onClick={() => setMenuOpen(false)}
-            >
-              ABOUT
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
               to="/solutions"
               className={({ isActive }) => (isActive ? styles.active : "")}
               onClick={() => setMenuOpen(false)}
@@ -75,17 +65,19 @@ export default function Navbar() {
               SOLUTIONS
             </NavLink>
           </li>
+          <li>
+            <NavLink
+              to="/contact"
+              className={({ isActive }) => (isActive ? styles.active : "")}
+              onClick={() => setMenuOpen(false)}
+            >
+              CONTACT
+            </NavLink>
+          </li>
         </ul>
 
-        {/* Right — Contact us · Dark mode toggle · Hamburger */}
+        {/* Right — Dark mode toggle · Hamburger */}
         <div className={styles.rightGroup}>
-          <button
-            className={styles.contactBtn}
-            onClick={() => navigate("/contact")}
-          >
-            Contact us
-          </button>
-
           <button
             className={styles.themeBtn}
             onClick={toggleTheme}
