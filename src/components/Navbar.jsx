@@ -41,7 +41,7 @@ export default function Navbar() {
           <img src={brfidLogo} alt="BRFID Logo" className={styles.logoImg} />
         </Link>
 
-        {/* Center — Nav links: HOME · SOLUTIONS · CONTACT */}
+        {/* Center — Nav links: HOME · SOLUTIONS · ABOUT · CONTACT */}
         <ul className={`${styles.navLinks} ${menuOpen ? styles.open : ""}`}>
           <li>
             <NavLink
@@ -63,6 +63,15 @@ export default function Navbar() {
               onClick={() => setMenuOpen(false)}
             >
               SOLUTIONS
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/about"
+              className={({ isActive }) => (isActive ? styles.active : "")}
+              onClick={() => setMenuOpen(false)}
+            >
+              ABOUT
             </NavLink>
           </li>
           <li>
