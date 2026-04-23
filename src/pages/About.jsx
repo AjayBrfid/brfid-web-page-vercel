@@ -84,6 +84,7 @@ const About = () => {
   };
 
   const [heroRef, heroVisible] = useReveal();
+  const [heritageRef, heritageVisible] = useReveal();
   const [quoteRef, quoteVisible] = useReveal();
   const [warehouseRef, warehouseVisible] = useReveal();
   const [missionRef, missionVisible] = useReveal();
@@ -195,7 +196,7 @@ const About = () => {
           >
             Britannia RFID (BRFID) began as Britannia Garment Packaging in
             Leicester, UK a trusted name in garment labelling and packaging
-            for over four decades. Today we deliver a complete AI-powered RFID
+            for over five decades. Today we deliver a complete AI-powered RFID
             ecosystem across mutiple industry, giving businesses
             real-time item-level visibility from source tag to enterprise
             analytics.
@@ -209,6 +210,149 @@ const About = () => {
         <div style={{ flex: 1, background: "#AB3480" }} />
         <div style={{ flex: 1, background: "#C9CD2C", borderRadius: "0 2px 2px 0" }} />
       </div>
+
+      {/* Heritage — UK Design · India Manufacturing */}
+      <section
+        ref={heritageRef}
+        style={{
+          padding: isMobile ? "40px 16px" : isTablet ? "52px 32px" : "60px 48px",
+          background: c.bg2,
+          transition: "background 0.3s ease",
+        }}
+      >
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+
+          {/* Heading — full width */}
+          <div style={{ ...fadeUp(heritageVisible, 0), marginBottom: isMobile ? 28 : 40, textAlign: "center" }}>
+            <span
+              style={{
+                display: "inline-block",
+                fontSize: "0.72rem",
+                fontWeight: 700,
+                letterSpacing: "0.15em",
+                textTransform: "uppercase",
+                color: c.accent,
+                background: isDark ? "rgba(11,115,200,0.12)" : "#EBF5FF",
+                padding: "0.3rem 0.9rem",
+                borderRadius: 100,
+                marginBottom: 16,
+              }}
+            >
+              Our Heritage
+            </span>
+            <h2
+              style={{
+                fontSize: "clamp(1.5rem, 3.5vw, 2.25rem)",
+                fontWeight: 800,
+                margin: "0 0 14px",
+                color: c.text1,
+                lineHeight: 1.2,
+              }}
+            >
+              Designed in the UK.{" "}
+              <span style={{ color: c.accent }}>Manufactured in India.</span>
+            </h2>
+            <p
+              style={{
+                fontSize: "1rem",
+                lineHeight: 1.75,
+                color: c.text2,
+                margin: "0 auto",
+                maxWidth: 640,
+              }}
+            >
+              Britannia RFID is built on the foundations of Britannia Garment
+              Packaging, with five decades of serving global fashion and retail
+              brands from Leicester, UK. That deep industry experience shapes
+              every product we design: precision-engineered in the UK,
+              cost-efficiently manufactured at scale in India, and deployed
+              across the world.
+            </p>
+          </div>
+
+          {/* Three pillars — horizontal row */}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: isMobile ? "column" : "row",
+              gap: isMobile ? 0 : 0,
+            }}
+          >
+            {[
+              {
+                accent: "#34ACE0",
+                tag: "Retail Expertise",
+                title: "50+ Years in Fashion and Retail Supply Chains",
+                desc: "From garment labelling programmes for global fashion brands to source-tag compliance across major retail groups, our retail DNA means our RFID solutions speak the language of buyers, merchandisers, and supply chain teams from day one.",
+                delay: 0.1,
+              },
+              {
+                accent: "#AB3480",
+                tag: "Packaging and Encoding Know-How",
+                title: "Inlay-to-Label Integration at Production Scale",
+                desc: "Decades of precision label and packaging manufacturing gave us the process mastery to encode, verify, and deliver 500M+ RFID units annually with 99.9% read accuracy, spanning everything from hangtags and woven labels to industrial asset tags.",
+                delay: 0.2,
+              },
+              {
+                accent: "#C9CD2C",
+                tag: "UK Design · India Scale",
+                title: "Global-Standard Engineering, Competitive Cost",
+                desc: "Product architecture, RFID antenna design, and platform development are led from the UK. High-volume manufacturing in India delivers the cost efficiency that makes enterprise-grade RFID accessible to mid market businesses worldwide.",
+                delay: 0.3,
+              },
+            ].map((pillar, i, arr) => (
+              <div
+                key={pillar.tag}
+                style={{
+                  ...fadeUp(heritageVisible, pillar.delay),
+                  flex: 1,
+                  padding: isMobile ? "20px 0" : "0 32px",
+                  borderTop: isMobile ? `3px solid ${pillar.accent}` : "none",
+                  borderLeft: !isMobile ? `3px solid ${pillar.accent}` : "none",
+                  borderRight: !isMobile && i < arr.length - 1 ? `1px solid ${c.border}` : "none",
+                  borderBottom: isMobile && i < arr.length - 1 ? `1px solid ${c.border}` : "none",
+                  paddingTop: isMobile ? 20 : 0,
+                }}
+              >
+                <span
+                  style={{
+                    display: "inline-block",
+                    fontSize: "0.63rem",
+                    fontWeight: 700,
+                    letterSpacing: "0.13em",
+                    textTransform: "uppercase",
+                    color: pillar.accent,
+                    marginBottom: 8,
+                  }}
+                >
+                  {pillar.tag}
+                </span>
+                <h3
+                  style={{
+                    fontSize: "clamp(0.9rem, 1.5vw, 1.05rem)",
+                    fontWeight: 700,
+                    color: c.text1,
+                    margin: "0 0 8px",
+                    lineHeight: 1.35,
+                  }}
+                >
+                  {pillar.title}
+                </h3>
+                <p
+                  style={{
+                    fontSize: "0.875rem",
+                    lineHeight: 1.72,
+                    color: c.text3,
+                    margin: 0,
+                  }}
+                >
+                  {pillar.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* Pull Quote */}
       <div
