@@ -45,17 +45,21 @@ export default function Footer() {
         {/* Contact */}
         <div className={styles.linkGroup}>
           <h4>Contact</h4>
-          <ul>
-            <li><a href="mailto:info@britanniarfids.com">info@britanniarfids.com</a></li>
-            <li><span className={styles.linkPlain}>India: +91 421 3502996</span></li>
-            <li><span className={styles.linkPlain}>UK: +44 (0)116 281 5300</span></li>
-            <li>
-              <a href="https://maps.app.goo.gl/WN9w4WC2f69uPnkM8" target="_blank" rel="noopener noreferrer">
+          <div className={styles.contactList}>
+            <a href="mailto:info@britanniarfids.com" className={styles.contactEmail}>
+              info@britanniarfids.com
+            </a>
+            <div className={styles.contactRegion}>
+              <span className={styles.linkPlain}>India: +91 421 3502996</span>
+              <a href="https://maps.app.goo.gl/WN9w4WC2f69uPnkM8" target="_blank" rel="noopener noreferrer" className={styles.contactAddress}>
                 Tirupur, Tamil Nadu, India
               </a>
-            </li>
-            <li><span className={styles.linkPlain}>Leicester, UK</span></li>
-          </ul>
+            </div>
+            <div className={styles.contactRegion}>
+              <span className={styles.linkPlain}>UK: +44 (0)116 281 5300</span>
+              <span className={styles.contactAddress}>Leicester, UK</span>
+            </div>
+          </div>
         </div>
 
         {/* Legal */}

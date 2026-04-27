@@ -60,6 +60,43 @@
   color: #34ACE0;
 }
 
+/* ── Contact detail structure ── */
+.contactList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.contactEmail {
+  font-size: 0.82rem;
+  color: #64748b;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.contactEmail:hover {
+  color: #34ACE0;
+}
+
+.contactRegion {
+  display: flex;
+  flex-direction: column;
+  gap: 0.18rem;
+}
+
+.contactAddress {
+  font-size: 0.82rem;
+  color: #64748b;
+  text-decoration: none;
+  transition: color 0.15s;
+  cursor: default;
+}
+
+a.contactAddress:hover {
+  color: #34ACE0;
+  cursor: pointer;
+}
+
 /* ── Contact / Legal ── */
 .linkGroup h4 {
   font-size: 0.78rem;
