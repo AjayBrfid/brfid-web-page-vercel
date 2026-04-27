@@ -209,8 +209,7 @@ const Contact = () => {
             </div>
             <div>
               <h4 style={{ fontSize: "clamp(1rem, 2.5vw, 1.125rem)", fontWeight: 700, margin: "0 0 6px", color: c.text1 }}>Email Us</h4>
-              <p style={{ fontSize: "0.9375rem", color: c.text4, margin: "0 0 3px" }}>hello@luminoustech.com</p>
-              <p style={{ fontSize: "0.9375rem", color: c.text4, margin: 0 }}>support@luminoustech.com</p>
+              <p style={{ fontSize: "0.9375rem", color: c.text4, margin: 0 }}>info@britanniarfids.com</p>
             </div>
           </div>
 
@@ -221,8 +220,9 @@ const Contact = () => {
             </div>
             <div>
               <h4 style={{ fontSize: "clamp(1rem, 2.5vw, 1.125rem)", fontWeight: 700, margin: "0 0 6px", color: c.text1 }}>Call Us</h4>
-              <p style={{ fontSize: "0.9375rem", color: c.text4, margin: "0 0 3px" }}>+1 (555) 234-5678</p>
-              <p style={{ fontSize: "0.9375rem", color: c.text4, margin: 0 }}>Mon - Fri, 9am - 6pm EST</p>
+              <p style={{ fontSize: "0.9375rem", color: c.text4, margin: "0 0 3px" }}>India: +91 421 3502996</p>
+              <p style={{ fontSize: "0.9375rem", color: c.text4, margin: "0 0 6px" }}>UK: +44 (0)116 281 5300</p>
+              <p style={{ fontSize: "0.9375rem", color: c.text4, margin: 0 }}>Mon – Fri, 9am – 6pm IST</p>
             </div>
           </div>
 
@@ -233,8 +233,10 @@ const Contact = () => {
             </div>
             <div>
               <h4 style={{ fontSize: "clamp(1rem, 2.5vw, 1.125rem)", fontWeight: 700, margin: "0 0 6px", color: c.text1 }}>Visit Us</h4>
-              <p style={{ fontSize: "0.9375rem", color: c.text4, margin: "0 0 3px" }}>The Innovation Hub, Suite 400</p>
-              <p style={{ fontSize: "0.9375rem", color: c.text4, margin: 0 }}>250 Tech Plaza, Palo Alto, CA 94301</p>
+              <p style={{ fontSize: "0.8125rem", fontWeight: 600, color: c.text3, margin: "0 0 2px", textTransform: "uppercase", letterSpacing: "0.08em" }}>India</p>
+              <p style={{ fontSize: "0.9375rem", color: c.text4, margin: "0 0 10px" }}>Ramegoundamplayam, Peruntholuvu,<br />Tirupur – 641665, Tamil Nadu</p>
+              <p style={{ fontSize: "0.8125rem", fontWeight: 600, color: c.text3, margin: "0 0 2px", textTransform: "uppercase", letterSpacing: "0.08em" }}>UK</p>
+              <p style={{ fontSize: "0.9375rem", color: c.text4, margin: 0 }}>22b Centurion Way, Meridian Business Park,<br />Leicester, Leicestershire LE19 1WH</p>
             </div>
           </div>
 
@@ -297,7 +299,7 @@ const Contact = () => {
             </div>
             <div>
               <p style={{ fontSize: "0.8125rem", fontWeight: 700, margin: 0, color: c.pinText1 }}>Britannia RFID</p>
-              <p style={{ fontSize: "0.6875rem", color: c.pinText2, margin: 0 }}>Palo Alto, California</p>
+              <p style={{ fontSize: "0.6875rem", color: c.pinText2, margin: 0 }}>Tirupur, Tamil Nadu</p>
             </div>
           </div>
           {/* Shadow under pin */}
@@ -309,7 +311,7 @@ const Contact = () => {
         {/* Open in Google Maps */}
         <div style={{ textAlign: "right", marginTop: 12 }}>
           <a
-            href="https://maps.google.com"
+            href="https://maps.app.goo.gl/WN9w4WC2f69uPnkM8"
             target="_blank"
             rel="noopener noreferrer"
             style={{

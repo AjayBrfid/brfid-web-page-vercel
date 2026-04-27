@@ -8,8 +8,9 @@
   margin: 0 auto;
   padding: 4rem 2rem 3rem;
   display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 4rem;
+  grid-template-columns: 210px 3fr 1fr 1fr;
+  gap: 2.5rem;
+  align-items: start;
 }
 
 .brand {}
@@ -22,45 +23,44 @@
   margin-bottom: 1.2rem;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1.2rem;
-}
-
-.logoText {
-  display: flex;
-  flex-direction: column;
-}
-
-.logoBrand {
-  font-size: 1rem;
-  font-weight: 700;
-  color: #f1f5f9;
-  line-height: 1.2;
-}
-
-.logoSub {
-  font-size: 0.7rem;
-  color: #3b82f6;
-  font-weight: 500;
-  letter-spacing: 0.05em;
-}
-
 .brandDesc {
   font-size: 0.82rem;
   line-height: 1.7;
   color: #64748b;
-  max-width: 220px;
+  max-width: 200px;
 }
 
-.links {
+/* ── Solutions ── */
+.solutionsGroup {}
+
+.groupTitle {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #f1f5f9;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.solutionsGrid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.7rem 1.25rem;
 }
 
+.solutionLink {
+  font-size: 0.82rem;
+  color: #64748b;
+  text-decoration: none;
+  transition: color 0.15s;
+  line-height: 1.4;
+}
+
+.solutionLink:hover {
+  color: #34ACE0;
+}
+
+/* ── Contact / Legal ── */
 .linkGroup h4 {
   font-size: 0.78rem;
   font-weight: 600;
@@ -81,10 +81,20 @@
   font-size: 0.82rem;
   color: #64748b;
   text-decoration: none;
-  cursor: default;
-  pointer-events: none;
+  transition: color 0.15s;
 }
 
+.linkGroup a:hover {
+  color: #34ACE0;
+}
+
+.linkPlain {
+  font-size: 0.82rem;
+  color: #64748b;
+  cursor: default;
+}
+
+/* ── Bottom bar ── */
 .bottom {
   border-top: 1px solid #1e293b;
 }
@@ -100,25 +110,41 @@
   color: #475569;
 }
 
+/* ══════════════════════════
+   RESPONSIVE
+══════════════════════════ */
+
 @media (max-width: 1024px) {
   .container {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
+    grid-template-columns: 210px 2fr 1fr 1fr;
+    gap: 2rem;
   }
+}
 
-  .links {
-    grid-template-columns: repeat(2, 1fr);
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  .brand {
+    grid-column: span 2;
+  }
+  .solutionsGroup {
+    grid-column: span 2;
+  }
+  .solutionsGrid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media (max-width: 480px) {
-  .links {
+  .container {
     grid-template-columns: 1fr 1fr;
+    padding: 3rem 1.25rem 2rem;
+    gap: 1.75rem;
   }
-}
-
-@media (max-width: 360px) {
-  .container { padding: 3rem 1.25rem 2rem; gap: 2rem; }
+  .brand { grid-column: span 2; }
+  .solutionsGroup { grid-column: span 2; }
+  .solutionsGrid { grid-template-columns: repeat(2, 1fr); }
   .bottomInner { padding: 1.25rem 1.25rem; }
-  .links { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
 }

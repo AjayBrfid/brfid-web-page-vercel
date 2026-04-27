@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect, useRef } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import styles from './Solutions.module.css'
 
 /* ── Icons ─────────────────────────────────────────────── */
@@ -192,6 +192,25 @@ const VERTICALS = [
 export default function Solutions() {
   const [active, setActive] = useState(0)
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const layoutRef = useRef(null)
+
+  useEffect(() => {
+    const industry = searchParams.get('industry')
+    if (industry) {
+      const idx = VERTICALS.findIndex(v => v.id === industry)
+      if (idx !== -1) {
+        setActive(idx)
+        setTimeout(() => {
+          if (layoutRef.current) {
+            const top = layoutRef.current.getBoundingClientRect().top + window.scrollY - 72
+            window.scrollTo({ top, behavior: 'smooth' })
+          }
+        }, 50)
+      }
+    }
+  }, [searchParams])
+
   const v = VERTICALS[active]
 
   return (
@@ -223,7 +242,7 @@ export default function Solutions() {
       </div>
 
       {/* Layout: sidebar + panel */}
-      <div className={styles.layout}>
+      <div className={styles.layout} ref={layoutRef}>
 
         {/* Sidebar */}
         <aside className={styles.sidebar}>
