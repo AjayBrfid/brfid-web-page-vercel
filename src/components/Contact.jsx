@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { AtSign, Phone, MapPin, Share2, Send } from "lucide-react";
 import contactimg from '../../public/images/img.png'
-import { useTheme } from "../context/ThemeContext";
 
 const useWindowWidth = () => {
   const [width, setWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
@@ -22,39 +21,34 @@ const Contact = () => {
   const isMobile = width < 768;
   const isTablet = width < 1024;
 
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
-
   const c = {
-    bg:         isDark ? "#0a0f1e" : "#ffffff",
-    bgCard:     isDark ? "#131d30" : "#ffffff",
-    bgInput:    isDark ? "#0d1829" : "#ffffff",
-    text1:      isDark ? "#f1f5f9" : "#111",
-    text2:      isDark ? "#cbd5e1" : "#333",
-    text3:      isDark ? "#94a3b8" : "#555",
-    text4:      isDark ? "#64748b" : "#666",
-    border:     isDark ? "#1e293b" : "#e2e8f0",
-    borderInput: isDark ? "#2d3f5a" : "#e2e6ea",
-    formBorder: isDark ? "#1e293b" : "#e8ecf0",
-    heroGrad:   isDark
-      ? "linear-gradient(135deg, #0a0f1e 0%, #0d1526 50%, #0a0f1e 100%)"
-      : "linear-gradient(135deg, #faf5f5 0%, #f5eeef 40%, #eee8e4 70%, #f0eae6 100%)",
-    iconBg:     isDark ? "rgba(52, 172, 224, 0.12)" : "#EBF5FF",
-    iconBorder: isDark ? "rgba(52, 172, 224, 0.35)" : "#0B73C8",
-    iconColor:  "#0B73C8",
-    socialBorder: isDark ? "#1e293b" : "#d0d5dc",
-    socialColor:  isDark ? "#94a3b8" : "#555",
-    mapBg:      isDark ? "#0d1526" : "#f0f2f5",
-    mapGrid:    isDark ? "#1e2e46" : "#d8dce0",
-    mapRoad:    isDark ? "#253350" : "#cdd1d5",
-    mapRoad2:   isDark ? "#1e2a42" : "#d4d8dc",
-    mapBldg:    isDark ? "#1a2d48" : "#d8dce0",
-    mapGreen:   isDark ? "#1a3028" : "#d4e8d0",
-    mapRect:    isDark ? "#0d1526" : "#e8ecf0",
-    pinBg:      isDark ? "#131d30" : "#fff",
-    pinText1:   isDark ? "#f1f5f9" : "#111",
-    pinText2:   isDark ? "#64748b" : "#777",
-    mapsLink:   "#0B73C8",
+    bg:          "#0a0f1e",
+    bgCard:      "#131d30",
+    bgInput:     "#0d1829",
+    text1:       "#f1f5f9",
+    text2:       "#cbd5e1",
+    text3:       "#94a3b8",
+    text4:       "#64748b",
+    border:      "#1e293b",
+    borderInput: "#2d3f5a",
+    formBorder:  "#1e293b",
+    heroGrad:    "linear-gradient(135deg, #0a0f1e 0%, #0d1526 50%, #0a0f1e 100%)",
+    iconBg:      "rgba(52, 172, 224, 0.12)",
+    iconBorder:  "rgba(52, 172, 224, 0.35)",
+    iconColor:   "#0B73C8",
+    socialBorder: "#1e293b",
+    socialColor:  "#94a3b8",
+    mapBg:       "#0d1526",
+    mapGrid:     "#1e2e46",
+    mapRoad:     "#253350",
+    mapRoad2:    "#1e2a42",
+    mapBldg:     "#1a2d48",
+    mapGreen:    "#1a3028",
+    mapRect:     "#0d1526",
+    pinBg:       "#131d30",
+    pinText1:    "#f1f5f9",
+    pinText2:    "#64748b",
+    mapsLink:    "#0B73C8",
   };
 
   const socialIcons = [
@@ -112,7 +106,7 @@ const Contact = () => {
             <div style={{
               position: "absolute", bottom: -36, left: -24,
               background: c.bgCard, borderRadius: 16, padding: "24px 28px",
-              boxShadow: isDark ? "0 8px 30px rgba(0,0,0,0.4)" : "0 8px 30px rgba(0,0,0,0.1)",
+              boxShadow: "0 8px 30px rgba(0,0,0,0.4)",
               minWidth: 260, transition: "background 0.3s ease",
             }}>
               <p style={{ fontSize: "0.8125rem", fontWeight: 700, letterSpacing: 1.5, color: "#34ACE0", textTransform: "uppercase", margin: "0 0 10px" }}>
@@ -145,7 +139,7 @@ const Contact = () => {
           borderRadius: 18,
           padding: isMobile ? "32px 20px" : "44px 38px",
           border: `1px solid ${c.formBorder}`,
-          boxShadow: isDark ? "0 2px 16px rgba(0,0,0,0.3)" : "0 2px 16px rgba(0,0,0,0.04)",
+          boxShadow: "0 2px 16px rgba(0,0,0,0.3)",
           boxSizing: "border-box",
           transition: "background 0.3s ease, border-color 0.3s ease",
         }}>
@@ -291,7 +285,7 @@ const Contact = () => {
             position: "absolute", top: "50%", left: "42%", transform: "translate(-50%, -100%)",
             display: "flex", alignItems: "center", gap: 8, background: c.pinBg,
             borderRadius: 30, padding: "8px 16px 8px 10px",
-            boxShadow: isDark ? "0 4px 20px rgba(0,0,0,0.4)" : "0 4px 20px rgba(0,0,0,0.15)",
+            boxShadow: "0 4px 20px rgba(0,0,0,0.4)",
             transition: "background 0.3s ease",
           }}>
             <div style={{ width: 32, height: 32, borderRadius: "50%", background: "#0B73C8", display: "flex", alignItems: "center", justifyContent: "center" }}>

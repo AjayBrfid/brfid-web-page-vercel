@@ -1,14 +1,10 @@
 import { Routes, Route, useLocation, Outlet } from 'react-router-dom'
 import { useEffect } from 'react'
-import { ThemeProvider } from './context/ThemeContext'
-
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import Stats from './components/Stats'
 import Verticals from './components/Verticals'
 import DigitalThread from './components/DigitalThread'
-// import Clients from './components/Clients'
-import TestimonialCTA from './components/TestimonialCTA'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import MilestonePopup from './components/MilestonePopup'
@@ -67,18 +63,13 @@ function LandingPage() {
 
 export default function App() {
   return (
-    <ThemeProvider>
     <Routes>
       <Route element={<Layout />}>
         <Route path="/" element={<LandingPage />} />
-        {/* <Route path="/products" element={<Products />} /> */}
-        {/* <Route path="/products/:id" element={<ProductDetail />} /> */}
         <Route path="/about" element={<About />} />
         <Route path="/solutions" element={<Solutions />} />
-        {/* <Route path="/clients" element={<Clients />} /> */}
         <Route path="/contact" element={<Contact />} />
       </Route>
     </Routes>
-    </ThemeProvider>
   )
 }

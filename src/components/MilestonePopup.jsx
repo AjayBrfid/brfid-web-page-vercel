@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react'
-import { useTheme } from '../context/ThemeContext'
 
 const DISPLAY_MS = 7000
 const COLOR      = '#34ACE0'
@@ -26,14 +25,12 @@ export default function MilestonePopup() {
   const startRef   = useRef(null)
   const rafRef     = useRef(null)
   const leavingRef = useRef(false)
-  const { theme }  = useTheme()
-  const isDark     = theme === 'dark'
 
-  const cardBg      = isDark ? '#131d30' : '#fff'
-  const headingClr  = isDark ? '#f1f5f9' : '#0d1a2e'
-  const bodyClr     = isDark ? '#94a3b8' : '#555'
-  const dividerClr  = isDark ? '#1e293b' : '#f0f2f5'
-  const barBg       = isDark ? '#1e293b' : '#f0f2f5'
+  const cardBg      = '#131d30'
+  const headingClr  = '#f1f5f9'
+  const bodyClr     = '#94a3b8'
+  const dividerClr  = '#1e293b'
+  const barBg       = '#1e293b'
 
   useEffect(() => {
     if (_alreadyShown) return

@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { useTheme } from "../context/ThemeContext";
 
 const steps = [
   {
@@ -52,13 +51,10 @@ export default function DigitalThread() {
   const [activeSteps, setActiveSteps] = useState(new Set());
   const [isMobile, setIsMobile] = useState(false);
   const [totalLineHeight, setTotalLineHeight] = useState(0);
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
-
-  const inactiveLine = isDark ? "#1e293b" : "#e2e8f0";
-  const headingColor = isDark ? "#f1f5f9" : "#0f172a";
-  const subtitleColor = isDark ? "#94a3b8" : "#64748b";
-  const bgColor = isDark ? "#0d1526" : "#f8fafc";
+  const inactiveLine = "#1e293b";
+  const headingColor = "#f1f5f9";
+  const subtitleColor = "#94a3b8";
+  const bgColor = "#0d1526";
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth <= 640);
@@ -188,7 +184,7 @@ export default function DigitalThread() {
 
             {steps.map((s, i) => (
               <Row key={i} step={s} index={i} isActive={activeSteps.has(i)} isMobile={isMobile}
-                dotRef={el => (dotRefs.current[i] = el)} isDark={isDark} />
+                dotRef={el => (dotRefs.current[i] = el)} />
             ))}
           </div>
         </div>
@@ -214,16 +210,16 @@ export default function DigitalThread() {
   );
 }
 
-function Row({ step, index, isActive, isMobile, dotRef, isDark }) {
+function Row({ step, index, isActive, isMobile, dotRef }) {
   const isLeft = step.side === "left";
   const [wasActive, setWasActive] = useState(false);
   const [justActivated, setJustActivated] = useState(false);
   const [animKey, setAnimKey] = useState(0);
 
-  const titleColor  = isDark ? "#f1f5f9" : "#0f172a";
-  const descColor   = isDark ? "#94a3b8" : "#64748b";
-  const borderColor = isDark ? "#1e293b" : "#e2e8f0";
-  const imgPlaceholder = isDark ? "#1e293b" : "#e2e8f0";
+  const titleColor  = "#f1f5f9";
+  const descColor   = "#94a3b8";
+  const borderColor = "#1e293b";
+  const imgPlaceholder = "#1e293b";
 
   useEffect(() => {
     if (isActive && !wasActive) {

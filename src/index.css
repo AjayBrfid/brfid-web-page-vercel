@@ -4,25 +4,7 @@
   padding: 0;
 }
 
-/* ── Light mode tokens (default) ── */
 :root {
-  --bg:          #ffffff;
-  --bg-2:        #f8fafc;
-  --bg-card:     #ffffff;
-  --text-1:      #0f172a;
-  --text-2:      #475569;
-  --text-3:      #64748b;
-  --border:      #e2e8f0;
-  --navbar-bg:         rgba(255, 255, 255, 0.88);
-  --hero-intro:        #f0f4ff;
-  --logo-center:       rgba(255, 255, 255, 0.92);
-  --node-bg:           rgba(255, 255, 255, 0.90);
-  --logo-img-bg:       transparent;
-  --logo-img-radius:   0px;
-}
-
-/* ── Dark mode tokens ── */
-[data-theme="dark"] {
   --bg:          #0a0f1e;
   --bg-2:        #0d1526;
   --bg-card:     #131d30;

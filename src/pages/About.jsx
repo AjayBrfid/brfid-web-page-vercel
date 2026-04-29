@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import { MapPin, Eye, Target, Zap, Shield, Users } from "lucide-react";
 import sourceimg from "../../public/images/Source Tagging.png";
 import containerimg from "../../public/images/Container.png";
-import { useTheme } from "../context/ThemeContext";
 
 const useWindowWidth = () => {
   const [width, setWidth] = useState(
@@ -60,27 +59,24 @@ const About = () => {
   const isMobile = width < 768;
   const isTablet = width < 1024;
 
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
-
   const c = {
-    bg:        isDark ? "#0a0f1e" : "#ffffff",
-    bg2:       isDark ? "#0d1526" : "#f7f9fb",
-    bgCard:    isDark ? "#131d30" : "#ffffff",
-    text1:     isDark ? "#f1f5f9" : "#111",
-    text2:     isDark ? "#cbd5e1" : "#444",
-    text3:     isDark ? "#94a3b8" : "#555",
-    text4:     isDark ? "#64748b" : "#777",
-    border:    isDark ? "#1e293b" : "#e2e8f0",
-    iconBg:    isDark ? "rgba(52, 172, 224, 0.12)" : "#EBF5FF",
+    bg:        "#0a0f1e",
+    bg2:       "#0d1526",
+    bgCard:    "#131d30",
+    text1:     "#f1f5f9",
+    text2:     "#cbd5e1",
+    text3:     "#94a3b8",
+    text4:     "#64748b",
+    border:    "#1e293b",
+    iconBg:    "rgba(52, 172, 224, 0.12)",
     iconColor: "#0B73C8",
     accent:    "#0B73C8",
     cardHoverBorder: "#0B73C8",
-    cardHoverShadow: isDark ? "0 8px 30px rgba(11,115,200,0.2)" : "0 8px 30px rgba(11,115,200,0.12)",
-    cardShadow: isDark ? "0 2px 12px rgba(0,0,0,0.3)" : "0 2px 12px rgba(0,0,0,0.04)",
+    cardHoverShadow: "0 8px 30px rgba(11,115,200,0.2)",
+    cardShadow: "0 2px 12px rgba(0,0,0,0.3)",
     cardIconBg: (hovered) => hovered
-      ? (isDark ? "rgba(52,172,224,0.15)" : "#EBF5FF")
-      : (isDark ? "rgba(255,255,255,0.06)" : "#f4f6f8"),
+      ? "rgba(52,172,224,0.15)"
+      : "rgba(255,255,255,0.06)",
   };
 
   const [heroRef, heroVisible] = useReveal();
@@ -232,7 +228,7 @@ const About = () => {
                 letterSpacing: "0.15em",
                 textTransform: "uppercase",
                 color: c.accent,
-                background: isDark ? "rgba(11,115,200,0.12)" : "#EBF5FF",
+                background: "rgba(11,115,200,0.12)",
                 padding: "0.3rem 0.9rem",
                 borderRadius: 100,
                 marginBottom: 16,
@@ -726,7 +722,7 @@ const About = () => {
                   >
                     <Icon
                       size={26}
-                      color={isHovered ? c.iconColor : (isDark ? "#64748b" : "#7a8a9e")}
+                      color={isHovered ? c.iconColor : "#64748b"}
                     />
                   </div>
                   <h4
