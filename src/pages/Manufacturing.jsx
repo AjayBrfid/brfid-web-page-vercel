@@ -70,8 +70,8 @@ const Manufacturing = () => {
   const [cardsRef,  cardsVisible]  = useReveal();
 
   const steps = [
-    { num: "01", label: "IC Chip Bonding",  color: "#34ACE0" },
-    { num: "02", label: "Antenna Mfg.",     color: "#1E8FD0" },
+    { num: "01", label: "Antenna Mfg.",     color: "#1E8FD0" },
+    { num: "02", label: "IC Chip Bonding",  color: "#34ACE0" },
     { num: "03", label: "Tag & Inlay",      color: "#0B73C8" },
     { num: "04", label: "Reader Hardware",  color: "#5B4BA8" },
     { num: "05", label: "Firmware",         color: "#AB3480" },

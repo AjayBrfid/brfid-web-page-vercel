@@ -32,20 +32,20 @@ export default function Navbar() {
           </li>
           <li>
             <NavLink
-              to="/solutions"
-              className={({ isActive }) => (isActive ? styles.active : "")}
-              onClick={() => setMenuOpen(false)}
-            >
-              SOLUTIONS
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
               to="/manufacturing"
               className={({ isActive }) => (isActive ? styles.active : "")}
               onClick={() => setMenuOpen(false)}
             >
               MANUFACTURING
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/solutions"
+              className={({ isActive }) => (isActive ? styles.active : "")}
+              onClick={() => setMenuOpen(false)}
+            >
+              SOLUTIONS
             </NavLink>
           </li>
           <li>
