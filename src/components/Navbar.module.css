@@ -36,12 +36,9 @@
 }
 
 .logoImg {
-  height: 48px;
+  height: 62px;
   width: auto;
   display: block;
-  background: var(--logo-img-bg);
-  border-radius: var(--logo-img-radius);
-  transition: background 0.3s ease;
 }
 
 /* ── Nav links — absolutely centred on desktop ── */
@@ -197,7 +194,7 @@
   }
 
   .logoImg {
-    height: 40px;
+    height: 52px;
   }
 
   .contactBtn {
@@ -217,7 +214,7 @@
   }
 
   .logoImg {
-    height: 36px;
+    height: 46px;
   }
 
   .contactBtn {

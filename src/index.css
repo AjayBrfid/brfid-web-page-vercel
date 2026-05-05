@@ -14,10 +14,9 @@
   --border:      #1e293b;
   --navbar-bg:         rgba(10, 15, 30, 0.92);
   --hero-intro:        #070d1f;
-  --logo-center:       rgba(255, 255, 255, 0.96);
   --node-bg:           rgba(19, 29, 48, 0.90);
-  --logo-img-bg:       rgba(255, 255, 255, 0.95);
-  --logo-img-radius:   8px;
+  --logo-img-bg:       transparent;
+  --logo-img-radius:   0;
 }
 
 html {

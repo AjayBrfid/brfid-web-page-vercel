@@ -363,7 +363,7 @@ export default function Hero() {
           </div>
           {/* logo card is outside orbitalContent so CSS scale() never shrinks it */}
           <div className={styles.logoCenter}>
-            <img src="/images/brfid-logo.png" alt="Britannia RFID" className={styles.logoCenterImg} />
+            <img src="/logo.png" alt="Britannia RFID" className={styles.logoCenterImg} />
           </div>
         </div>
 

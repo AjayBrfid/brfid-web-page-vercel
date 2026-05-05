@@ -251,16 +251,14 @@
   top: 50%; left: 50%;
   transform: translate(-50%,-50%);
   z-index: 10;
-  background: var(--logo-center);
-  border: 1.5px solid rgba(52,172,224,0.22);
-  border-radius: 18px;
-  padding: 0.9rem 1.1rem;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 8px 40px rgba(52,172,224,0.16), 0 2px 8px rgba(0,0,0,0.06);
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
 }
 
 .logoCenterImg {
-  height: 68px;
+  height: 260px;
   width: auto;
   display: block;
 }
@@ -370,7 +368,7 @@
   display: flex;
   align-items: center;
   padding-top: 100px;
-  padding-left: clamp(2rem, 7%, 6rem);
+  padding-left: max(calc((100vw - 1280px) / 2 + 2.5rem), 2.5rem);
   z-index: 20;
   will-change: transform, opacity;
 }
@@ -557,8 +555,8 @@
   .introDesc { max-width: 580px; }
   .flowStep { width: min(88%, 580px); }
   .flowBigNum { font-size: clamp(10rem, 22vw, 18rem); }
-  .logoCenter { padding: 0.65rem 0.85rem; border-radius: 14px; }
-  .logoCenterImg { height: 46px; }
+  .logoCenter { padding: 0; border-radius: 0; }
+  .logoCenterImg { height: 200px; }
 }
 
 /* ── 3. ≤860 px — large tablet ───────────────────────────────────────────
@@ -584,8 +582,8 @@
   .introInner { max-width: 100%; }
   .introHeading { font-size: clamp(1.9rem, 3.5vw, 2.4rem); }
   .introDesc { max-width: 100%; font-size: 0.95rem; }
-  .logoCenter { padding: 0.6rem 0.75rem; border-radius: 12px; }
-  .logoCenterImg { height: 42px; }
+  .logoCenter { padding: 0; border-radius: 0; }
+  .logoCenterImg { height: 170px; }
 }
 
 /* ── 4. ≤768 px — tablet portrait / large phone landscape ────────────────
@@ -614,8 +612,8 @@
   .flowHeading { font-size: clamp(1.6rem, 3vw, 2.2rem); }
   .flowDesc { font-size: 0.88rem; }
   .flowBigNum { font-size: clamp(9rem, 21vw, 16rem); }
-  .logoCenter { padding: 0.55rem 0.7rem; border-radius: 11px; }
-  .logoCenterImg { height: 38px; }
+  .logoCenter { padding: 0; border-radius: 0; }
+  .logoCenterImg { height: 150px; }
 }
 
 /* ── 5. ≤600 px — standard phones ───────────────────────────────────────
@@ -647,8 +645,8 @@
   .flowStatVal { font-size: 1.4rem; }
   .flowBigNum { font-size: clamp(8rem, 20vw, 14rem); }
   .stageFooter { left: 50%; transform: translateX(-50%); }
-  .logoCenter { padding: 0.45rem 0.6rem; border-radius: 10px; }
-  .logoCenterImg { height: 34px; }
+  .logoCenter { padding: 0; border-radius: 0; }
+  .logoCenterImg { height: 120px; }
 }
 
 /* ── 6. ≤425 px — Mobile L: iPhone 14 / Pixel 7 ─────────────────────────
@@ -674,8 +672,8 @@
   .introHeading { font-size: 1.45rem; }
   .introDesc { font-size: 0.82rem; }
   .flowHeading { font-size: 1.35rem; }
-  .logoCenter { padding: 0.4rem 0.55rem; border-radius: 9px; }
-  .logoCenterImg { height: 30px; }
+  .logoCenter { padding: 0; border-radius: 0; }
+  .logoCenterImg { height: 100px; }
 }
 
 /* ── 7. ≤400 px — smallest Android phones ───────────────────────────────
@@ -701,6 +699,6 @@
   .introHeading { font-size: 1.35rem; }
   .introDesc { font-size: 0.8rem; }
   .flowHeading { font-size: 1.3rem; }
-  .logoCenter { padding: 0.35rem 0.5rem; border-radius: 8px; }
-  .logoCenterImg { height: 26px; }
+  .logoCenter { padding: 0; border-radius: 0; }
+  .logoCenterImg { height: 85px; }
 }

@@ -245,7 +245,7 @@ export default function MilestonePopup() {
                 <h2 style={{ fontSize:'clamp(1.3rem,4vw,1.75rem)', fontWeight:800, margin:'0 0 6px', lineHeight:1.2, color:headingClr, fontFamily:'Inter,sans-serif', letterSpacing:'-.025em' }}>
                   Celebrating Five Decades<br/>of Innovation
                 </h2>
-                <p style={{ fontSize:'1rem', fontWeight:600, color:COLOR, margin:0, fontFamily:'Inter,sans-serif' }}>in the RFID Industry</p>
+                <p style={{ fontSize:'1rem', fontWeight:600, color:COLOR, margin:0, fontFamily:'Inter,sans-serif' }}>in Garment labels & Packaging</p>
               </div>
 
               {/* Body text */}

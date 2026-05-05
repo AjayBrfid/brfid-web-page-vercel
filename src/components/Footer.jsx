@@ -22,9 +22,7 @@ export default function Footer() {
         {/* Brand */}
         {/* Brand */}
         <div className={styles.brand}>
-          <div className={styles.logoWrap}>
-            <img src={brfidLogo} alt="BRFID Logo" style={{ height: 40, width: 'auto' }} />
-          </div>
+          <img src={brfidLogo} alt="BRFID Logo" className={styles.footerLogo} />
           <p className={styles.brandDesc}>
             UK designed, India manufactured RFID solutions for retail, logistics, healthcare, and beyond.
           </p>

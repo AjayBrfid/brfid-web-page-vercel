@@ -6,20 +6,24 @@
 .container {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 4rem 2rem 3rem;
+  padding: 4rem 2.5rem 3rem;
   display: grid;
   grid-template-columns: 210px 3fr 1fr 1fr;
   gap: 2.5rem;
   align-items: start;
 }
 
-.brand {}
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: -1rem;
+}
 
-.logoWrap {
-  display: inline-block;
-  background: #fff;
-  border-radius: 10px;
-  padding: 6px 12px;
+.footerLogo {
+  height: 62px;
+  width: auto;
+  display: block;
   margin-bottom: 1.2rem;
 }
 
@@ -27,7 +31,7 @@
   font-size: 0.82rem;
   line-height: 1.7;
   color: #64748b;
-  max-width: 200px;
+  max-width: 210px;
 }
 
 /* ── Solutions ── */
@@ -139,7 +143,7 @@ a.contactAddress:hover {
 .bottomInner {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 1.5rem 2rem;
+  padding: 1.5rem 2.5rem;
 }
 
 .copyright {
@@ -184,4 +188,5 @@ a.contactAddress:hover {
   .solutionsGroup { grid-column: span 2; }
   .solutionsGrid { grid-template-columns: repeat(2, 1fr); }
   .bottomInner { padding: 1.25rem 1.25rem; }
+  .footerLogo { height: 52px; }
 }
