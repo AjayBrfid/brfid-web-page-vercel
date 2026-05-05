@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { DollarSign, Layers, MapPin, Shield, Award, Factory, CheckCircle } from "lucide-react";
+import { DollarSign, Layers, MapPin, Shield, Factory, CheckCircle } from "lucide-react";
 
 const useWindowWidth = () => {
   const [width, setWidth] = useState(
@@ -202,7 +202,7 @@ const Manufacturing = () => {
               maxWidth:   580,
             }}
           >
-            India&apos;s first company to design, manufacture and deploy the
+            Designing, manufacturing and deploying the
             complete RFID stack domestically
           </p>
         </div>
@@ -588,41 +588,6 @@ const Manufacturing = () => {
             </div>
           )}
 
-          {/* First-in-India badge */}
-          <div
-            style={{
-              ...fadeUp(allRevealed, 0.15),
-              marginTop:      isMobile ? 32 : 44,
-              display:        "flex",
-              justifyContent: "center",
-            }}
-          >
-            <div
-              style={{
-                display:      "inline-flex",
-                alignItems:   "center",
-                gap:          10,
-                background:   "rgba(52,172,224,0.07)",
-                border:       "1.5px solid rgba(52,172,224,0.28)",
-                borderRadius: 12,
-                padding:      isSmall ? "10px 14px" : isMobile ? "12px 16px" : "14px 26px",
-              }}
-            >
-              <Award size={isMobile ? 16 : 20} color={c.accent} />
-              <span
-                style={{
-                  fontSize:   isSmall ? "0.8125rem" : isMobile ? "0.875rem" : "0.9375rem",
-                  fontWeight: 700,
-                  color:      c.text1,
-                  lineHeight: 1.45,
-                }}
-              >
-                First in India to perform{" "}
-                <span style={{ color: c.accent }}>IC Chip Bonding</span>{" "}
-                domestically
-              </span>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -683,17 +648,20 @@ const Manufacturing = () => {
                   onMouseLeave={() => setHoveredCard(null)}
                   style={{
                     ...fadeUp(cardsVisible, 0.08 + i * 0.1),
-                    background:   c.bgCard,
-                    borderRadius: 16,
-                    padding:      isSmall ? "24px 16px" : isMobile ? "26px 20px" : "32px 24px",
-                    border:       `1.5px solid ${isHovered ? card.accentColor : c.border}`,
-                    boxShadow:    isHovered ? `0 8px 32px ${card.accentColor}28` : "0 2px 12px rgba(0,0,0,0.25)",
-                    transition:   "all 0.25s ease",
-                    transform:    cardsVisible
+                    background:     c.bgCard,
+                    borderRadius:   16,
+                    padding:        isSmall ? "24px 16px" : isMobile ? "26px 20px" : "32px 24px",
+                    border:         `1.5px solid ${isHovered ? card.accentColor : c.border}`,
+                    boxShadow:      isHovered ? `0 8px 32px ${card.accentColor}28` : "0 2px 12px rgba(0,0,0,0.25)",
+                    transition:     "all 0.25s ease",
+                    transform:      cardsVisible
                       ? isHovered ? "translateY(-5px)" : "translateY(0)"
                       : "translateY(32px)",
-                    cursor:       "default",
-                    textAlign:    "center",
+                    cursor:         "default",
+                    display:        "flex",
+                    flexDirection:  "column",
+                    alignItems:     "center",
+                    textAlign:      "center",
                   }}
                 >
                   {/* Icon */}
@@ -706,30 +674,30 @@ const Manufacturing = () => {
                       display:        "flex",
                       alignItems:     "center",
                       justifyContent: "center",
-                      margin:         `0 auto ${isSmall ? 14 : 18}px`,
+                      marginBottom:   isSmall ? 14 : 18,
                       border:         `1.5px solid ${card.accentColor}44`,
                       boxShadow:      isHovered ? `0 0 18px ${card.accentColor}44` : "none",
                       transition:     "box-shadow 0.25s",
+                      flexShrink:     0,
                     }}
                   >
                     <Icon size={isSmall ? 22 : 26} color={card.accentColor} />
                   </div>
 
-                  {/* Stat */}
-                  {card.stat && (
-                    <div
-                      style={{
-                        fontSize:      isSmall ? "1.5rem" : "1.85rem",
-                        fontWeight:    900,
-                        color:         card.accentColor,
-                        marginBottom:  6,
-                        letterSpacing: "-0.03em",
-                        lineHeight:    1,
-                      }}
-                    >
-                      {card.stat}
-                    </div>
-                  )}
+                  {/* Stat — fixed height slot so cards without a stat stay aligned */}
+                  <div
+                    style={{
+                      fontSize:      isSmall ? "1.5rem" : "1.85rem",
+                      fontWeight:    900,
+                      color:         card.accentColor,
+                      marginBottom:  6,
+                      letterSpacing: "-0.03em",
+                      lineHeight:    1,
+                      minHeight:     isSmall ? "1.5rem" : "1.85rem",
+                    }}
+                  >
+                    {card.stat || ""}
+                  </div>
 
                   {/* Title */}
                   <h3
@@ -750,6 +718,7 @@ const Manufacturing = () => {
                       lineHeight: 1.65,
                       color:      c.text3,
                       margin:     0,
+                      flex:       1,
                     }}
                   >
                     {card.desc}
