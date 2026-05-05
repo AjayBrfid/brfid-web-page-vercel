@@ -7,7 +7,8 @@
 .stickyFrame {
   position: sticky;
   top: 0;
-  height: 100vh;
+  height: 100vh;        /* fallback for older browsers */
+  height: 100dvh;       /* dynamic viewport — adapts to phone browser chrome */
   overflow: hidden;
   background: #070d1f;
 }
@@ -180,10 +181,15 @@
 .orbital {
   position: absolute;
   top: 50%;
-  left: 70%;
+  /* Anchor the orbital's CENTER at ~75% of viewport width, but never
+     let it push past the safe right edge of the 1280px container.
+     This keeps it right of center on wide screens without clipping. */
+  left: min(75%, calc(50% + (1280px / 2) - 280px - 2.5rem));
+  right: auto;
   width: 560px;
   height: 560px;
   margin-top: calc(-280px + 36px);
+  transform: translateX(-50%);
   transform-origin: center center;
   will-change: transform, opacity;
   pointer-events: none;
@@ -503,30 +509,36 @@
    orbital_visual_bottom = top_offset + container_half + scale × 275 px
    ══════════════════════════════════════════════════════════════════════ */
 
-/* ── 1. ≤1280 px — large desktop, side-by-side ───────────────────────── */
+/* ── 1. ≤1440 px — MacBook 14"/15" laptops: scale orbital to fit ───────── */
+@media (max-width: 1440px) {
+  .orbital {
+    left: 72%;
+    right: auto;
+    width: 520px;
+    height: 520px;
+    margin-top: calc(-260px + 36px);
+    transform: translateX(-50%);
+  }
+  .orbitalContent { transform: scale(0.88); }
+}
+/* ── 1b. ≤1280 px — smaller laptops (13" MacBook, etc.) ──────────────── */
 @media (max-width: 1280px) {
-  .orbital { left: 62%; width: 500px; height: 500px; margin-top: calc(-250px + 36px); }
+  .orbital {
+    left: 70%;
+    right: auto;
+    width: 460px;
+    height: 460px;
+    margin-top: calc(-230px + 36px);
+    transform: translateX(-50%);
+  }
+  .orbitalContent { transform: scale(0.78); }
 }
 
-/* ── 2. ≤1100 px — STACKED LAYOUT begins ────────────────────────────────
- *
- *  Below 1100 px, side-by-side fails: the outer ring at left:60% overlaps
- *  the intro text block. Switch to orbital-top / text-below layout.
- *
- *  Geometry (≤1100 px):
- *    top_offset     = 72 px (navbar) + 40 px (2.5 rem gap) = 112 px
- *    container_half = 400 px ÷ 2 = 200 px
- *    center_y       = 112 + 200 = 312 px
- *    icon_half      = 34 px  (node 68 px tall: icon 52 + gap 4 + label 12)
- *    top_of_icon    = 312 − (0.72 × 275) − 34 = 80 px  ✓ clears 72 px navbar
- *    bottom_of_icon = 312 + (0.72 × 275) + 34 = 544 px
- *    padding-top    = min(544 + 8, 100vh − 240) = min(552, 100vh − 240)
- *
- *  scale 0.72 → edge_h ≈ 217 px — fits any viewport ≥ 434 px wide.
- * ─────────────────────────────────────────────────────────────────────── */
+/* ── 2. ≤1100 px — STACKED LAYOUT begins ──────────────────────────────── */
 @media (max-width: 1100px) {
   .orbital {
     left: 50%;
+    right: auto;                      /* reset desktop's right-anchored positioning */
     top: calc(72px + 2.5rem);         /* 112 px — icon top lands at 80 px, clears navbar */
     margin-top: 0;
     width: 400px;
@@ -537,9 +549,9 @@
 
   /* ── stacked layout: text starts just below the orbital ── */
   .introOuter {
-    align-items: flex-start;          /* anchor to top-of-content-area, not bottom */
-    justify-content: center;          /* horizontally centre the text block        */
-    padding-top: clamp(552px, calc(100vh - 80px), 640px);
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: clamp(552px, calc(100dvh - 80px), 640px);
     padding-bottom: 2rem;
     padding-left: clamp(2rem, 6%, 5rem);
     padding-right: clamp(2rem, 6%, 5rem);
@@ -559,22 +571,16 @@
   .logoCenterImg { height: 200px; }
 }
 
-/* ── 3. ≤860 px — large tablet ───────────────────────────────────────────
- *    top = 132 px, half = 170 px, center_y = 302 px
- *    top_of_icon  = 302 − (0.68 × 275) − 34 = 81 px  ✓ clears navbar
- *    bottom_of_icon = 302 + (0.68 × 275) + 34 = 523 px
- *    padding-top  = min(523 + 8, 100vh − 240) = min(532, 100vh − 240)
- * ─────────────────────────────────────────────────────────────────────── */
+/* ── 3. ≤860 px — large tablet ─────────────────────────────────────────── */
 @media (max-width: 860px) {
   .orbital {
-    top: calc(72px + 3.75rem);        /* 132 px — icon top lands at 81 px, clears navbar */
+    top: calc(72px + 3.75rem);
     width: 340px;
     height: 340px;
   }
-  /* scale 0.68 → edge_h ≈ 205 px; fits screens ≥ 410 px wide */
   .orbitalContent { transform: scale(0.68); }
   .introOuter {
-    padding-top: clamp(532px, calc(100vh - 100px), 620px);
+    padding-top: clamp(532px, calc(100dvh - 100px), 620px);
     padding-left: clamp(1.5rem, 5%, 3rem);
     padding-right: clamp(1.5rem, 5%, 3rem);
     padding-bottom: 1.5rem;
@@ -586,22 +592,16 @@
   .logoCenterImg { height: 170px; }
 }
 
-/* ── 4. ≤768 px — tablet portrait / large phone landscape ────────────────
- *    top = 136 px, half = 150 px, center_y = 286 px
- *    top_of_icon  = 286 − (0.62 × 275) − 34 = 81 px  ✓ clears navbar
- *    bottom_of_icon = 286 + (0.62 × 275) + 34 = 491 px
- *    padding-top  = min(491 + 8, 100vh − 220) = min(500, 100vh − 220)
- * ─────────────────────────────────────────────────────────────────────── */
+/* ── 4. ≤768 px — tablet portrait / large phone landscape ──────────────── */
 @media (max-width: 768px) {
   .orbital {
-    top: calc(72px + 4rem);           /* 136 px — icon top lands at 81 px, clears navbar */
+    top: calc(72px + 4rem);
     width: 300px;
     height: 300px;
   }
-  /* scale 0.62 → edge_h ≈ 187 px; fits screens ≥ 374 px wide */
   .orbitalContent { transform: scale(0.62); }
   .introOuter {
-    padding-top: clamp(500px, calc(100vh - 130px), 580px);
+    padding-top: clamp(500px, calc(100dvh - 130px), 580px);
     padding-left: 1.5rem;
     padding-right: 1.5rem;
     padding-bottom: 1.25rem;
@@ -616,25 +616,23 @@
   .logoCenterImg { height: 150px; }
 }
 
-/* ── 5. ≤600 px — standard phones ───────────────────────────────────────
- *    top = 132 px, half = 135 px, center_y = 267 px
- *    top_of_icon  = 267 − (0.56 × 275) − 34 = 79 px  ✓ clears navbar
- *    bottom_of_icon = 267 + (0.56 × 275) + 34 = 455 px
- *    padding-top  = min(455 + 10, 100vh − 200) = min(466, 100vh − 200)
- * ─────────────────────────────────────────────────────────────────────── */
+/* ── 5. ≤600 px — standard phones ─────────────────────────────────────── */
 @media (max-width: 600px) {
   .orbital {
-    top: calc(72px + 3.75rem);        /* 132 px — icon top lands at 79 px, clears navbar */
+    top: calc(72px + 3.75rem);
     width: 270px;
     height: 270px;
   }
-  /* scale 0.56 → edge_h ≈ 169 px; fits screens ≥ 338 px wide */
   .orbitalContent { transform: scale(0.56); }
   .introOuter {
-    padding-top: min(466px, calc(100vh - 200px));
+    /* On tall phones (e.g. iPhone Pro Max, modern Androids), let the text
+       sit lower so it fills the viewport instead of leaving empty space.
+       max(content-min, viewport-aware) ensures content always fits AND
+       reaches near the bottom on tall viewports. */
+    padding-top: max(min(466px, calc(100dvh - 200px)), calc(100dvh - 360px));
     padding-left: 1.25rem;
     padding-right: 1.25rem;
-    padding-bottom: 1rem;
+    padding-bottom: 1.5rem;
   }
   .introHeading { font-size: 1.55rem; }
   .introDesc { font-size: 0.85rem; }
@@ -649,25 +647,19 @@
   .logoCenterImg { height: 120px; }
 }
 
-/* ── 6. ≤425 px — Mobile L: iPhone 14 / Pixel 7 ─────────────────────────
- *    top = 126 px, half = 125 px, center_y = 251 px
- *    top_of_icon  = 251 − (0.50 × 275) − 34 = 80 px  ✓ clears navbar
- *    bottom_of_icon = 251 + (0.50 × 275) + 34 = 422 px
- *    padding-top  = min(422 + 10, 100vh − 190) = min(432, 100vh − 190)
- * ─────────────────────────────────────────────────────────────────────── */
+/* ── 6. ≤425 px — Mobile L: iPhone 14 / Pixel 7 ─────────────────────── */
 @media (max-width: 425px) {
   .orbital {
-    top: calc(62px + 4rem);           /* 126 px — icon top lands at 80 px, clears navbar */
+    top: calc(62px + 4rem);
     width: 250px;
     height: 250px;
   }
-  /* scale 0.50 → edge_h ≈ 151 px; fits 425 px viewport with 62 px margin each side */
   .orbitalContent { transform: scale(0.50); }
   .introOuter {
-    padding-top: min(432px, calc(100vh - 190px));
+    padding-top: max(min(432px, calc(100dvh - 190px)), calc(100dvh - 340px));
     padding-left: 1rem;
     padding-right: 1rem;
-    padding-bottom: 1rem;
+    padding-bottom: 1.5rem;
   }
   .introHeading { font-size: 1.45rem; }
   .introDesc { font-size: 0.82rem; }
@@ -676,25 +668,19 @@
   .logoCenterImg { height: 100px; }
 }
 
-/* ── 7. ≤400 px — smallest Android phones ───────────────────────────────
- *    top = 120 px, half = 115 px, center_y = 235 px
- *    top_of_icon  = 235 − (0.44 × 275) − 34 = 80 px  ✓ clears navbar
- *    bottom_of_icon = 235 + (0.44 × 275) + 34 = 390 px
- *    padding-top  = min(390 + 10, 100vh − 180) = min(400, 100vh − 180)
- * ─────────────────────────────────────────────────────────────────────── */
+/* ── 7. ≤400 px — smallest Android phones ───────────────────────────── */
 @media (max-width: 400px) {
   .orbital {
-    top: calc(60px + 3.75rem);        /* 120 px — icon top lands at 80 px, clears navbar */
+    top: calc(60px + 3.75rem);
     width: 230px;
     height: 230px;
   }
-  /* scale 0.44 → edge_h ≈ 133 px; fits down to 320 px screens (27 px margin each side) */
   .orbitalContent { transform: scale(0.44); }
   .introOuter {
-    padding-top: min(400px, calc(100vh - 180px));
+    padding-top: max(min(400px, calc(100dvh - 180px)), calc(100dvh - 320px));
     padding-left: 1rem;
     padding-right: 1rem;
-    padding-bottom: 1rem;
+    padding-bottom: 1.5rem;
   }
   .introHeading { font-size: 1.35rem; }
   .introDesc { font-size: 0.8rem; }

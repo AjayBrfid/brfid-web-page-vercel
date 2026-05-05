@@ -21,7 +21,6 @@ const ORBS = [
 export default function MilestonePopup() {
   const [open,     setOpen]     = useState(false)
   const [leaving,  setLeaving]  = useState(false)
-  const [progress, setProgress] = useState(100)
   const startRef   = useRef(null)
   const rafRef     = useRef(null)
   const leavingRef = useRef(false)
@@ -30,7 +29,6 @@ export default function MilestonePopup() {
   const headingClr  = '#f1f5f9'
   const bodyClr     = '#94a3b8'
   const dividerClr  = '#1e293b'
-  const barBg       = '#1e293b'
 
   useEffect(() => {
     if (_alreadyShown) return
@@ -57,7 +55,6 @@ export default function MilestonePopup() {
     const tick = (now) => {
       if (leavingRef.current) return
       const elapsed = now - startRef.current
-      setProgress(Math.max(0, 100 - (elapsed / DISPLAY_MS) * 100))
       if (elapsed >= DISPLAY_MS) { triggerDismiss(); return }
       rafRef.current = requestAnimationFrame(tick)
     }
@@ -78,6 +75,8 @@ export default function MilestonePopup() {
   return (
     <>
       <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800;900&display=swap');
+
         @keyframes mp-bg-in  { from { opacity:0 } to { opacity:1 } }
         @keyframes mp-bg-out { from { opacity:1 } to { opacity:0 } }
 
@@ -146,6 +145,34 @@ export default function MilestonePopup() {
         @keyframes mp-bar-glow {
           0%,100% { opacity:.45 }
           50%     { opacity:1 }
+        }
+
+        @keyframes mp-gold-shine {
+          0%   { background-position: -200% center }
+          100% { background-position:  200% center }
+        }
+
+        @keyframes mp-gold-pulse {
+          0%,100% {
+            filter:
+              drop-shadow(0 0 18px rgba(255, 200, 70, 0.55))
+              drop-shadow(0 0 38px rgba(255, 170, 40, 0.35));
+          }
+          50% {
+            filter:
+              drop-shadow(0 0 26px rgba(255, 220, 110, 0.85))
+              drop-shadow(0 0 60px rgba(255, 180, 50, 0.55));
+          }
+        }
+
+        @keyframes mp-sparkle {
+          0%,100% { opacity:0; transform:scale(0) rotate(0deg) }
+          50%     { opacity:1; transform:scale(1) rotate(180deg) }
+        }
+
+        @keyframes mp-sparkle-2 {
+          0%,100% { opacity:0; transform:scale(0) rotate(45deg) }
+          50%     { opacity:.9; transform:scale(1.1) rotate(225deg) }
         }
       `}</style>
 
@@ -232,9 +259,51 @@ export default function MilestonePopup() {
                 <span style={{ fontSize:'.6rem', fontWeight:700, letterSpacing:'.2em', color:COLOR, textTransform:'uppercase', fontFamily:'Inter,sans-serif' }}>MILESTONE</span>
               </div>
 
-              {/* Large 50 numeral */}
+              {/* Large 50 numeral — royal gold */}
               <div style={{ display:'flex', alignItems:'flex-end', gap:10, marginBottom:12, animation:'mp-num-in .72s cubic-bezier(0.22,1,0.36,1) .08s both' }}>
-                <span style={{ fontSize:'clamp(5rem,15vw,7.5rem)', fontWeight:900, lineHeight:1, letterSpacing:'-0.04em', color:COLOR, fontFamily:'Inter,sans-serif' }}>50</span>
+                <span style={{ position:'relative', display:'inline-block', animation:'mp-gold-pulse 3s ease-in-out infinite' }}>
+                  <span
+                    style={{
+                      fontSize:'clamp(5.5rem,16vw,8.5rem)',
+                      fontWeight:900,
+                      lineHeight:1,
+                      letterSpacing:'-0.02em',
+                      fontFamily:'"Cinzel", "Trajan Pro", "Times New Roman", serif',
+                      backgroundImage:
+                        'linear-gradient(110deg,' +
+                          '#7a4e10 0%,' +
+                          '#c8941f 12%,' +
+                          '#f4d36b 24%,' +
+                          '#fff5c2 32%,' +
+                          '#f4d36b 40%,' +
+                          '#e0a82e 50%,' +
+                          '#fff5c2 60%,' +
+                          '#f4d36b 70%,' +
+                          '#c8941f 82%,' +
+                          '#7a4e10 100%)',
+                      backgroundSize:'200% auto',
+                      WebkitBackgroundClip:'text',
+                      backgroundClip:'text',
+                      WebkitTextFillColor:'transparent',
+                      color:'transparent',
+                      animation:'mp-gold-shine 4s linear infinite',
+                      textShadow:'0 2px 8px rgba(0,0,0,0.4)',
+                    }}
+                  >50</span>
+                  {/* Sparkles overlaying the 50 */}
+                  <span style={{ position:'absolute', top:'12%', left:'18%', width:10, height:10, pointerEvents:'none', animation:'mp-sparkle 2.4s ease-in-out 0.2s infinite' }}>
+                    <svg viewBox="0 0 24 24" width="100%" height="100%"><path d="M12 0 L14 10 L24 12 L14 14 L12 24 L10 14 L0 12 L10 10 Z" fill="#fff5c2"/></svg>
+                  </span>
+                  <span style={{ position:'absolute', top:'55%', left:'48%', width:7, height:7, pointerEvents:'none', animation:'mp-sparkle-2 3s ease-in-out 1.1s infinite' }}>
+                    <svg viewBox="0 0 24 24" width="100%" height="100%"><path d="M12 0 L14 10 L24 12 L14 14 L12 24 L10 14 L0 12 L10 10 Z" fill="#ffe27a"/></svg>
+                  </span>
+                  <span style={{ position:'absolute', top:'30%', right:'8%', width:8, height:8, pointerEvents:'none', animation:'mp-sparkle 2.8s ease-in-out 1.7s infinite' }}>
+                    <svg viewBox="0 0 24 24" width="100%" height="100%"><path d="M12 0 L14 10 L24 12 L14 14 L12 24 L10 14 L0 12 L10 10 Z" fill="#fff5c2"/></svg>
+                  </span>
+                  <span style={{ position:'absolute', bottom:'10%', left:'30%', width:6, height:6, pointerEvents:'none', animation:'mp-sparkle-2 2.2s ease-in-out 0.6s infinite' }}>
+                    <svg viewBox="0 0 24 24" width="100%" height="100%"><path d="M12 0 L14 10 L24 12 L14 14 L12 24 L10 14 L0 12 L10 10 Z" fill="#ffd24a"/></svg>
+                  </span>
+                </span>
                 <div style={{ paddingBottom:'0.75rem' }}>
                   <p style={{ fontSize:'clamp(1.1rem,3vw,1.5rem)', fontWeight:700, color:headingClr, margin:0, fontFamily:'Inter,sans-serif', letterSpacing:'-0.02em', lineHeight:1.15 }}>Years</p>
                 </div>
@@ -256,12 +325,9 @@ export default function MilestonePopup() {
               <div style={{ height:1, background:dividerClr }}/>
             </div>
 
-            {/* Progress bar */}
-            <div style={{ height:5, background:barBg, position:'relative', overflow:'hidden', transition:'background 0.3s ease' }}>
-              <div style={{ height:'100%', width:`${progress}%`, background:`linear-gradient(90deg,${COLOR}88,${COLOR})`, position:'relative', overflow:'hidden' }}>
-                <div style={{ position:'absolute', inset:0, background:'linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent)', animation:'mp-shimmer 1.8s ease-in-out infinite' }}/>
-                <div style={{ position:'absolute', right:0, top:0, bottom:0, width:20, background:`radial-gradient(ellipse at right,${COLOR},transparent)`, animation:'mp-bar-glow 1s ease-in-out infinite' }}/>
-              </div>
+            {/* Tri-color bottom band — identical to top */}
+            <div style={{ height:6, background:`linear-gradient(90deg,${COLOR},#AB3480,#C9CD2C)`, position:'relative', overflow:'hidden' }}>
+              <div style={{ position:'absolute', inset:0, width:'18%', background:'linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent)', animation:'mp-shimmer 2.4s ease-in-out 1s infinite', pointerEvents:'none' }}/>
             </div>
 
           </div>{/* /card */}
