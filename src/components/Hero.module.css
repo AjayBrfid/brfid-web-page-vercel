@@ -7,8 +7,8 @@
 .stickyFrame {
   position: sticky;
   top: 0;
-  height: 100vh;        /* fallback for older browsers */
-  height: 100dvh;       /* dynamic viewport — adapts to phone browser chrome */
+  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   background: #070d1f;
 }
@@ -551,7 +551,7 @@
   .introOuter {
     align-items: flex-start;
     justify-content: center;
-    padding-top: clamp(552px, calc(100dvh - 80px), 640px);
+    padding-top: 600px;
     padding-bottom: 2rem;
     padding-left: clamp(2rem, 6%, 5rem);
     padding-right: clamp(2rem, 6%, 5rem);
@@ -580,7 +580,7 @@
   }
   .orbitalContent { transform: scale(0.68); }
   .introOuter {
-    padding-top: clamp(532px, calc(100dvh - 100px), 620px);
+    padding-top: 550px;
     padding-left: clamp(1.5rem, 5%, 3rem);
     padding-right: clamp(1.5rem, 5%, 3rem);
     padding-bottom: 1.5rem;
@@ -601,7 +601,7 @@
   }
   .orbitalContent { transform: scale(0.62); }
   .introOuter {
-    padding-top: clamp(500px, calc(100dvh - 130px), 580px);
+    padding-top: 510px;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
     padding-bottom: 1.25rem;
@@ -625,14 +625,10 @@
   }
   .orbitalContent { transform: scale(0.56); }
   .introOuter {
-    /* On tall phones (e.g. iPhone Pro Max, modern Androids), let the text
-       sit lower so it fills the viewport instead of leaving empty space.
-       max(content-min, viewport-aware) ensures content always fits AND
-       reaches near the bottom on tall viewports. */
-    padding-top: max(min(466px, calc(100dvh - 200px)), calc(100dvh - 360px));
+    padding-top: 470px;
     padding-left: 1.25rem;
     padding-right: 1.25rem;
-    padding-bottom: 1.5rem;
+    padding-bottom: 1rem;
   }
   .introHeading { font-size: 1.55rem; }
   .introDesc { font-size: 0.85rem; }
@@ -656,10 +652,10 @@
   }
   .orbitalContent { transform: scale(0.50); }
   .introOuter {
-    padding-top: max(min(432px, calc(100dvh - 190px)), calc(100dvh - 340px));
+    padding-top: 435px;
     padding-left: 1rem;
     padding-right: 1rem;
-    padding-bottom: 1.5rem;
+    padding-bottom: 1rem;
   }
   .introHeading { font-size: 1.45rem; }
   .introDesc { font-size: 0.82rem; }
@@ -677,10 +673,10 @@
   }
   .orbitalContent { transform: scale(0.44); }
   .introOuter {
-    padding-top: max(min(400px, calc(100dvh - 180px)), calc(100dvh - 320px));
+    padding-top: 405px;
     padding-left: 1rem;
     padding-right: 1rem;
-    padding-bottom: 1.5rem;
+    padding-bottom: 1rem;
   }
   .introHeading { font-size: 1.35rem; }
   .introDesc { font-size: 0.8rem; }
