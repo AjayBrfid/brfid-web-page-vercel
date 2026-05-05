@@ -1,126 +1,197 @@
+import { useEffect, useRef, useState } from 'react'
+
+const ITEMS = [
+  {
+    color: '#34ACE0',
+    label: 'Heritage',
+    text: 'Designed in the UK · Made in India',
+    sub: '50+ years of labelling expertise',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="2" y1="12" x2="22" y2="12"/>
+        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+      </svg>
+    ),
+  },
+  {
+    color: '#AB3480',
+    label: 'Expertise',
+    text: 'End-to-End RFID Solutions Provider',
+    sub: 'Chip to cloud, one partner',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M5 12.55a11 11 0 0 1 14.08 0"/>
+        <path d="M1.42 9a16 16 0 0 1 21.16 0"/>
+        <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
+        <circle cx="12" cy="20" r="1" fill="currentColor" stroke="none"/>
+      </svg>
+    ),
+  },
+  {
+    color: '#C9CD2C',
+    label: 'Innovation',
+    text: 'First in India for IC Chip Bonding',
+    sub: '100% domestically manufactured',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+      </svg>
+    ),
+  },
+]
+
 export default function TaglineStrip() {
+  const [visible, setVisible] = useState(false)
+  const ref = useRef(null)
+
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) setVisible(true) },
+      { threshold: 0.15 }
+    )
+    if (ref.current) obs.observe(ref.current)
+    return () => obs.disconnect()
+  }, [])
+
   return (
     <>
       <style>{`
-        @keyframes ts-fade-in {
-          from { opacity:0; transform:translateY(14px) }
-          to   { opacity:1; transform:translateY(0) }
+        @keyframes ts-slideUp {
+          from { opacity: 0; transform: translateY(22px); }
+          to   { opacity: 1; transform: translateY(0); }
         }
-
-        .ts-outer {
-          background: #0f172a;
-          padding: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 5vw, 2.5rem);
-          border-top: 1px solid rgba(255,255,255,0.06);
+        @keyframes ts-iconSpin {
+          from { transform: rotate(-8deg) scale(0.8); opacity: 0; }
+          to   { transform: rotate(0deg)  scale(1);   opacity: 1; }
+        }
+        .ts-section {
+          background: #0d1526;
+          border-top:    1px solid rgba(255,255,255,0.06);
           border-bottom: 1px solid rgba(255,255,255,0.06);
+          padding: clamp(2.5rem,6vw,4rem) clamp(1rem,5vw,2.5rem);
+          position: relative;
+          overflow: hidden;
         }
-
+        .ts-section::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background:
+            radial-gradient(ellipse 50% 150% at 0%   50%, rgba(52,172,224,0.06)  0%, transparent 55%),
+            radial-gradient(ellipse 50% 150% at 100% 50%, rgba(201,205,44,0.05)  0%, transparent 55%);
+          pointer-events: none;
+        }
         .ts-inner {
           max-width: 1100px;
           margin: 0 auto;
-          display: flex;
-          align-items: stretch;
-          justify-content: center;
-          gap: clamp(1.5rem, 4vw, 3.5rem);
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: clamp(1.5rem,4vw,2.5rem);
+          position: relative;
         }
-
-        .ts-item {
+        .ts-card {
+          display: flex;
+          align-items: flex-start;
+          gap: 16px;
+          padding: 1.5rem;
+          background: rgba(255,255,255,0.025);
+          border: 1.5px solid rgba(255,255,255,0.07);
+          border-radius: 16px;
+          transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+          cursor: default;
+        }
+        .ts-card:hover {
+          border-color: var(--c);
+          box-shadow: 0 8px 32px color-mix(in srgb, var(--c) 18%, transparent);
+          transform: translateY(-4px);
+        }
+        .ts-icon {
+          width: 44px;
+          height: 44px;
+          border-radius: 12px;
+          background: color-mix(in srgb, var(--c) 14%, transparent);
+          border: 1.5px solid color-mix(in srgb, var(--c) 28%, transparent);
           display: flex;
           align-items: center;
-          gap: 14px;
-          flex: 1;
-          animation: ts-fade-in 0.55s ease both;
-        }
-        .ts-item:nth-child(1) { animation-delay: 0.08s; }
-        .ts-item:nth-child(3) { animation-delay: 0.2s; }
-
-        .ts-bar {
-          width: 4px;
-          border-radius: 2px;
+          justify-content: center;
+          color: var(--c);
           flex-shrink: 0;
-          align-self: stretch;
-          min-height: 44px;
+          transition: box-shadow 0.25s;
         }
-
-        .ts-label {
+        .ts-card:hover .ts-icon {
+          box-shadow: 0 0 18px color-mix(in srgb, var(--c) 35%, transparent);
+        }
+        .ts-icon svg { width: 20px; height: 20px; }
+        .ts-chip {
           font-size: 0.6rem;
           font-weight: 700;
-          letter-spacing: 0.18em;
+          letter-spacing: 0.16em;
           text-transform: uppercase;
-          margin: 0 0 5px;
+          color: var(--c);
+          margin-bottom: 6px;
           font-family: Inter, sans-serif;
         }
-
         .ts-text {
-          font-size: clamp(0.9rem, 1.6vw, 1.15rem);
+          font-size: clamp(0.875rem,1.5vw,1.05rem);
           font-weight: 700;
-          color: #fff;
-          margin: 0;
+          color: #f1f5f9;
+          margin: 0 0 4px;
+          line-height: 1.35;
           font-family: Inter, sans-serif;
           letter-spacing: -0.01em;
-          line-height: 1.35;
+        }
+        .ts-sub {
+          font-size: 0.75rem;
+          color: #64748b;
+          margin: 0;
+          font-family: Inter, sans-serif;
+          font-weight: 500;
         }
 
-        .ts-divider {
-          width: 1px;
-          background: rgba(255,255,255,0.12);
-          flex-shrink: 0;
-          align-self: stretch;
-          min-height: 44px;
+        /* Responsive */
+        @media (max-width: 860px) {
+          .ts-inner { grid-template-columns: 1fr; gap: 1rem; }
+          .ts-card { padding: 1.25rem; }
         }
-
-        /* Tablet — stack at 820px where long text gets cramped */
-        @media (max-width: 820px) {
-          .ts-inner {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 1.75rem;
-          }
-          .ts-divider { display: none; }
-          .ts-item { flex: unset; width: 100%; }
-          .ts-bar { min-height: 38px; }
-          .ts-text { font-size: clamp(0.95rem, 3vw, 1.1rem); }
-        }
-
-        /* Mobile */
         @media (max-width: 480px) {
-          .ts-outer { padding: 2rem 1.25rem; }
-          .ts-inner { gap: 1.5rem; }
-          .ts-item { gap: 12px; }
-          .ts-label { font-size: 0.58rem; }
-          .ts-text { font-size: 0.95rem; }
+          .ts-section { padding: 2rem 1rem; }
+          .ts-icon { width: 38px; height: 38px; border-radius: 10px; }
+          .ts-icon svg { width: 17px; height: 17px; }
+          .ts-text { font-size: 0.9rem; }
         }
       `}</style>
 
-      <div className="ts-outer">
+      <div className="ts-section" ref={ref}>
         <div className="ts-inner">
-
-          {/* Item 1 — Heritage */}
-          <div className="ts-item">
-            <div className="ts-bar" style={{ background: '#34ACE0' }} />
-            <div>
-              <p className="ts-label" style={{ color: '#34ACE0' }}>Heritage</p>
-              <p className="ts-text">
-                Designed in the UK&nbsp;
-                <span style={{ color: '#34ACE0', fontWeight: 400 }}>·</span>
-                &nbsp;Made in India
-              </p>
+          {ITEMS.map((item, i) => (
+            <div
+              key={i}
+              className="ts-card"
+              style={{
+                '--c': item.color,
+                opacity:   visible ? 1 : 0,
+                transform: visible ? 'translateY(0)' : 'translateY(22px)',
+                transition: `opacity 0.6s ease ${i * 0.14}s, transform 0.6s cubic-bezier(0.34,1.3,0.64,1) ${i * 0.14}s, border-color 0.25s, box-shadow 0.25s, transform 0.25s`,
+              }}
+            >
+              <div
+                className="ts-icon"
+                style={{
+                  animation: visible
+                    ? `ts-iconSpin 0.5s cubic-bezier(0.34,1.3,0.64,1) ${0.1 + i * 0.14}s both`
+                    : 'none',
+                }}
+              >
+                {item.icon}
+              </div>
+              <div>
+                <p className="ts-chip">{item.label}</p>
+                <p className="ts-text">{item.text}</p>
+                <p className="ts-sub">{item.sub}</p>
+              </div>
             </div>
-          </div>
-
-          {/* Vertical divider (desktop only) */}
-          <div className="ts-divider" />
-
-          {/* Item 2 — Expertise */}
-          <div className="ts-item">
-            <div className="ts-bar" style={{ background: '#AB3480' }} />
-            <div>
-              <p className="ts-label" style={{ color: '#AB3480' }}>Expertise</p>
-              <p className="ts-text">
-                End-to-End RFID Solutions Provider in India
-              </p>
-            </div>
-          </div>
-
+          ))}
         </div>
       </div>
     </>

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import styles from './Verticals.module.css'
 
 const verticals = [
@@ -261,17 +261,30 @@ const ChevronRight = () => (
   </svg>
 )
 
+const CheckIcon = ({ color }) => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: 2 }}>
+    <polyline points="20 6 9 17 4 12"/>
+  </svg>
+)
+const DotIcon = ({ color }) => (
+  <span style={{ width: 6, height: 6, borderRadius: '50%', background: color, flexShrink: 0, marginTop: 7, display: 'inline-block' }} />
+)
+
 export default function Verticals() {
   const [current, setCurrent] = useState(0)
   const [animDir, setAnimDir] = useState('next')
+  const [detailKey, setDetailKey] = useState(0)
   const total = verticals.length
 
-  const goTo = (to, dir) => { setAnimDir(dir); setCurrent(to) }
+  const goTo = (to, dir) => {
+    setAnimDir(dir)
+    setCurrent(to)
+    setDetailKey(k => k + 1)
+  }
   const goNext = () => goTo((current + 1) % total, 'next')
   const goPrev = () => goTo((current - 1 + total) % total, 'prev')
   const goDot  = (i) => { if (i !== current) goTo(i, i > current ? 'next' : 'prev') }
 
-  // three visible cards: left, center (active), right
   const indices = [
     (current - 1 + total) % total,
     current,
@@ -318,6 +331,13 @@ export default function Verticals() {
                   </div>
                   <h3 className={styles.cardTitle}>{v.title}</h3>
                   <p className={styles.cardDesc}>{v.desc}</p>
+                  {isActive && (
+                    <div className={styles.cardProgress}>
+                      <span className={styles.cardProgressLabel}>
+                        {String(current + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
+                      </span>
+                    </div>
+                  )}
                 </div>
               )
             })}
@@ -341,6 +361,42 @@ export default function Verticals() {
               style={i === current ? { '--clr': activeV.color } : {}}
             />
           ))}
+        </div>
+
+        {/* Detail panel */}
+        <div key={detailKey} className={styles.detail} style={{ '--clr': activeV.color }}>
+          <div className={styles.detailHeader}>
+            <span className={styles.detailPlatform}>{activeV.platform}</span>
+            <h3 className={styles.detailTitle}>{activeV.title}</h3>
+          </div>
+
+          <div className={styles.detailBody}>
+            {/* Use Cases */}
+            <div className={styles.detailCol}>
+              <h4 className={styles.detailColHead}>Use Cases</h4>
+              <ul className={styles.detailList}>
+                {activeV.useCases.map((uc, i) => (
+                  <li key={i} className={styles.detailItem} style={{ '--i': i }}>
+                    <DotIcon color={activeV.color} />
+                    <span>{uc}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Features */}
+            <div className={styles.detailCol}>
+              <h4 className={styles.detailColHead}>Platform Features</h4>
+              <ul className={styles.detailList}>
+                {activeV.features.map((f, i) => (
+                  <li key={i} className={styles.detailItem} style={{ '--i': i }}>
+                    <CheckIcon color={activeV.color} />
+                    <span>{f}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
 
       </div>

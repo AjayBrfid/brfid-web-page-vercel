@@ -41,6 +41,15 @@ export default function Navbar() {
           </li>
           <li>
             <NavLink
+              to="/manufacturing"
+              className={({ isActive }) => (isActive ? styles.active : "")}
+              onClick={() => setMenuOpen(false)}
+            >
+              MANUFACTURING
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
               to="/about"
               className={({ isActive }) => (isActive ? styles.active : "")}
               onClick={() => setMenuOpen(false)}
